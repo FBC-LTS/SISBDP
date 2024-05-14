@@ -16,6 +16,11 @@ const Registro = () => {
   const [erroConfirmarSenha, setErroConfirmarSenha] = useState('');
 
   const handleRegistro = () => {
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const telefoneRegex = /^\d{10,11}$/;
+    const senhaRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+
     if (!nome) {
       setErroNome('Por favor, insira seu nome completo.');
       return;
@@ -23,14 +28,14 @@ const Registro = () => {
       setErroNome('');
     }
 
-    if (!email) {
+    if (!emailRegex.test(email)) {
         setErroEmail('Por favor, insira seu e-mail.');
         return;
     } else {
         setErroEmail(''); 
     }
 
-    if (!telefone) {
+    if (!telefoneRegex.test(telefone)) {
         setErroTelefone('Por favor, insira seu telefone.');
         return;
     } else {
@@ -44,8 +49,8 @@ const Registro = () => {
         setErroUsuario('');
     }
 
-    if (!senha) {
-        setErroSenha('Por favor, insira sua senha.');
+    if (!senhaRegex.test(senha)) {
+        setErroSenha('A senha deve conter pelo menos 8 caracteres, incluindo pelo menos uma letra minúscula, uma letra maiúscula e um número.');
         return;
     } else {
         setErroSenha('');
