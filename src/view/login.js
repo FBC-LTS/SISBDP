@@ -10,6 +10,8 @@ const Login = () => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
+  const navigation = useNavigation();
+
 
   const handleLogin = () => {
   // Expressão regular para validar o formato do e-mail
@@ -39,7 +41,7 @@ const Login = () => {
 
   const handleCreateAccount = () => {
     // Lógica para criar uma nova conta
-    console.log('Redirecionando para a página de criação de conta...');
+    navigation.navigate('Registro');
   };
 
   const handleForgotPassword = () => {
