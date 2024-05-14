@@ -1,13 +1,19 @@
 import React from 'react';
-import { View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import Login from './src/view/login';
 import Registro from './src/view/registro';
 
+const Stack = createStackNavigator();
+
 const App = () => {
   return (
-    <View style={{ flex: 1 }}>
-      <Login/>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Registro" component={Registro} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
