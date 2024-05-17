@@ -11,7 +11,6 @@ const Registro = () => {
   const [erroNome, setErroNome] = useState('');
   const [erroEmail, setErroEmail] = useState('');
   const [erroTelefone, setErroTelefone] = useState('');
-  const [erroUsuario, setErroUsuario] = useState('');
   const [erroSenha, setErroSenha] = useState('');
   const [erroConfirmarSenha, setErroConfirmarSenha] = useState('');
 
@@ -107,14 +106,7 @@ const Registro = () => {
       />
       {erroTelefone ? <Text style={{ color: 'red' }}>{erroTelefone}</Text> : null}
 
-      <Text style={styles.label}>Usuário</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={setUsuario}
-        value={usuario}
-        placeholder="Insira seu nome de usuário"
-      />
-      {erroUsuario ? <Text style={{ color: 'red' }}>{erroUsuario}</Text> : null}
+
 
       <Text style={styles.label}>Senha</Text>
       <TextInput
