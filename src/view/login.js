@@ -34,8 +34,15 @@ const Login = () => {
     setPasswordError('');
   }
 
-  // Se ambos passarem na validação, os dados de login são válidos
-  console.log('Login realizado com sucesso!');
+  const loginSucess = true;
+
+  if (loginSucess) {
+    console.log('Login realizado com sucesso!');
+    // Redireciona para a tela Home
+    navigation.navigate('Home');
+  } else {
+    console.log('Falha no login. Verifique as credenciais e tente novamente.');
+  }
 };
 
 
@@ -46,6 +53,7 @@ const Login = () => {
 
   const handleForgotPassword = () => {
     // Lógica para redefinir a senha
+    navigation.navigate('EsqueciSenha');
     console.log('Redirecionando para a página de redefinição de senha...');
   };
 
