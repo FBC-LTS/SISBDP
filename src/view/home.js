@@ -70,36 +70,32 @@ const Home = ({ navigation }) => {
         <Button title="Ir para Detalhes" onPress={handlePress} />
       </View>
 
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Notificações</Text>
-        <FlatList
-          data={notifications}
-          renderItem={renderNotification}
-          keyExtractor={(item) => item.id}
-        />
-      </View>
+      <FlatList
+        style={styles.section}
+        ListHeaderComponent={<Text style={styles.sectionTitle}>Notificações</Text>}
+        data={notifications}
+        renderItem={renderNotification}
+        keyExtractor={(item) => item.id}
+      />
 
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Produtos em Baixo Estoque</Text>
-        <FlatList
-          data={lowStockProducts}
-          renderItem={renderLowStockProduct}
-          keyExtractor={(item) => item.id}
-        />
-      </View>
+      
 
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Atendimentos Agendados</Text>
-        <FlatList
-          data={scheduledAppointments}
-          renderItem={renderScheduledAppointment}
-          keyExtractor={(item) => item.id}
-        />
-      </View>
+      <FlatList
+        style={styles.section}
+        ListHeaderComponent={<Text style={styles.sectionTitle}>Produtos em Estoque Baixo</Text>}
+        data={lowStockProducts}
+        renderItem={renderLowStockProduct}
+        keyExtractor={(item) => item.id}
+      />
 
-      <View style={styles.searchBar}>
-        <Button title="Pesquisar..." />
-      </View>
+      <FlatList
+        style={styles.section}
+        ListHeaderComponent={<Text style={styles.sectionTitle}>Agendamentos</Text>}
+        data={scheduledAppointments}
+        renderItem={renderScheduledAppointment}
+        keyExtractor={(item) => item.id}
+      />
+
     </View>
   );
 };
