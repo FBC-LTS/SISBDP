@@ -5,6 +5,9 @@ import Login from './src/view/login';
 import Registro from './src/view/registro';
 import EsqueciSenha from './src/view/esquecisenha';
 import Home from './src/view/home';
+import Produto from './src/view/produto';
+
+
 
 const Stack = createStackNavigator();
 
@@ -16,8 +19,11 @@ const App = () => {
         <Stack.Screen name="Registro" component={Registro} />
         <Stack.Screen name="EsqueciSenha" component={EsqueciSenha} />
         <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Produto" component={Produto} />
       </Stack.Navigator>
     </NavigationContainer>
+    
+    
   );
 };
 
