@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Button, FlatList, Image } from 'react-native';
-import BottomNavBar from '../components/BottomNavBar';
-
+import { View, Text, StyleSheet, FlatList, Image, TextInput } from 'react-native';
+import BottomNavBar from './BottomNavBar';
 
 const Home = ({ navigation }) => {
   const [userName, setUserName] = useState('USUÁRIO'); // Armazena o nome do usuário
@@ -40,10 +39,6 @@ const Home = ({ navigation }) => {
     loadFakeData();
   }, []);
 
-  const handlePress = () => {
-    navigation.navigate('Details'); // Navega para a tela "Details"
-  };
-
   const renderNotification = ({ item }) => (
     <View style={styles.notificationItem}>
       <Text>{item.title}</Text>
@@ -53,8 +48,10 @@ const Home = ({ navigation }) => {
   const renderLowStockProduct = ({ item }) => (
     <View style={styles.lowStockProductItem}>
       <Image source={{ uri: item.image }} style={styles.productImage} />
-      <Text style={styles.productName}>{item.name}</Text>
-      <Text style={styles.productStock}>Estoque atual: {item.quantity}</Text>
+      <View>
+        <Text style={styles.productName}>{item.name}</Text>
+        <Text style={styles.productStock}>Estoque atual: {item.quantity}</Text>
+      </View>
     </View>
   );
 
@@ -68,38 +65,38 @@ const Home = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Bem-vindo(a), {userName}!</Text>
-        <Button title="Ir para Detalhes" onPress={handlePress} />
+        <Text style={styles.title}>Bem-vindo(a), <Text style={styles.userName}>{userName}</Text>!</Text>
       </View>
 
-      <FlatList
-        style={styles.section}
-        ListHeaderComponent={<Text style={styles.sectionTitle}>Notificações</Text>}
-        data={notifications}
-        renderItem={renderNotification}
-        keyExtractor={(item) => item.id}
-      />
+      <View style={styles.notificationsSection}>
+        <Text style={styles.sectionTitle}>Notificações</Text>
+        <TextInput style={styles.searchBar} placeholder="Pesquisar..." />
+        <FlatList
+          data={notifications}
+          renderItem={renderNotification}
+          keyExtractor={(item) => item.id}
+        />
+      </View>
 
-      
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Produtos em Estoque Baixo</Text>
+        <FlatList
+          data={lowStockProducts}
+          renderItem={renderLowStockProduct}
+          keyExtractor={(item) => item.id}
+        />
+      </View>
 
-      <FlatList
-        style={styles.section}
-        ListHeaderComponent={<Text style={styles.sectionTitle}>Produtos em Estoque Baixo</Text>}
-        data={lowStockProducts}
-        renderItem={renderLowStockProduct}
-        keyExtractor={(item) => item.id}
-      />
-
-      <FlatList
-        style={styles.section}
-        ListHeaderComponent={<Text style={styles.sectionTitle}>Agendamentos</Text>}
-        data={scheduledAppointments}
-        renderItem={renderScheduledAppointment}
-        keyExtractor={(item) => item.id}
-      />
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Agendamentos</Text>
+        <FlatList
+          data={scheduledAppointments}
+          renderItem={renderScheduledAppointment}
+          keyExtractor={(item) => item.id}
+        />
+      </View>
 
       <BottomNavBar navigation={navigation} />
-
     </View>
   );
 };
@@ -107,12 +104,11 @@ const Home = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0a0a0a',
+    backgroundColor: '#0A0A0A', // Background preto
     padding: 20,
-    paddingBottom: 60,
+    paddingBottom: 60, // Espaço para a barra de navegação
   },
   header: {
-    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
@@ -120,12 +116,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#fff',
+    color: 'white',
   },
   userName: {
-    color: '#00057D9',
+    color: '#0057D9',
   },
-  notificationSection: {
+  notificationsSection: {
     marginBottom: 20,
   },
   section: {
@@ -135,18 +131,18 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: '#fff',
+    color: 'white',
   },
   notificationItem: {
     padding: 10,
-    backgroundColor: '#2a2a2a',
-    borderRadius: 5,
+    backgroundColor: '#2A2A2A', // Background cinza para os itens
+    borderRadius: 10,
     marginBottom: 10,
   },
   lowStockProductItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#2a2a2a',
+    backgroundColor: '#2A2A2A', // Background cinza para os itens
     borderRadius: 10,
     padding: 10,
     marginBottom: 10,
@@ -158,7 +154,7 @@ const styles = StyleSheet.create({
   },
   productName: {
     fontSize: 16,
-    color: '#fff',
+    color: 'white',
   },
   productStock: {
     fontSize: 14,
@@ -166,24 +162,24 @@ const styles = StyleSheet.create({
   },
   appointmentItem: {
     padding: 10,
-    backgroundColor: '#2a2a2a',
-    borderRadius: 5,
+    backgroundColor: '#2A2A2A', // Background cinza para os itens
+    borderRadius: 10,
     marginBottom: 10,
   },
   appointmentCustomer: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#fff',
+    color: 'white',
   },
   appointmentDate: {
     fontSize: 14,
     color: '#999',
   },
   searchBar: {
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     padding: 10,
     borderRadius: 10,
-    marginTop: 20,
+    marginBottom: 20,
   },
 });
 
