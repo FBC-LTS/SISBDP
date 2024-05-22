@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Button, FlatList, Image } from 'react-native';
+import BottomNavBar from '../components/BottomNavBar';
+
 
 const Home = ({ navigation }) => {
   const [userName, setUserName] = useState('USUÁRIO'); // Armazena o nome do usuário
@@ -96,6 +98,8 @@ const Home = ({ navigation }) => {
         keyExtractor={(item) => item.id}
       />
 
+      <BottomNavBar navigation={navigation} />
+
     </View>
   );
 };
@@ -103,17 +107,26 @@ const Home = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#0a0a0a',
     padding: 20,
+    paddingBottom: 60,
   },
   header: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
+    color: '#fff',
+  },
+  userName: {
+    color: '#00057D9',
+  },
+  notificationSection: {
+    marginBottom: 20,
   },
   section: {
     marginBottom: 20,
@@ -122,15 +135,20 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: '#fff',
   },
   notificationItem: {
     padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    backgroundColor: '#2a2a2a',
+    borderRadius: 5,
+    marginBottom: 10,
   },
   lowStockProductItem: {
     flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: '#2a2a2a',
+    borderRadius: 10,
+    padding: 10,
     marginBottom: 10,
   },
   productImage: {
@@ -140,6 +158,7 @@ const styles = StyleSheet.create({
   },
   productName: {
     fontSize: 16,
+    color: '#fff',
   },
   productStock: {
     fontSize: 14,
@@ -147,18 +166,23 @@ const styles = StyleSheet.create({
   },
   appointmentItem: {
     padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    backgroundColor: '#2a2a2a',
+    borderRadius: 5,
+    marginBottom: 10,
   },
   appointmentCustomer: {
     fontSize: 16,
     fontWeight: 'bold',
+    color: '#fff',
   },
   appointmentDate: {
     fontSize: 14,
     color: '#999',
   },
   searchBar: {
+    backgroundColor: '#fff',
+    padding: 10,
+    borderRadius: 10,
     marginTop: 20,
   },
 });
