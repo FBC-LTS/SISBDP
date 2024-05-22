@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, FlatList, Button } from "react-native";
+import BottomNavBar from "../components/BottomNavBar";
 
 const Produto = ({ navigation }) => {
   const produto = [
@@ -31,6 +32,7 @@ const Produto = ({ navigation }) => {
         />
         <Button title= "Exibir Mais..." onPress={() => navigation.navigate("Exibir Mais")} />
         <Button title="Adicionar Produto" onPress={() => navigation.navigate("Adicionar Produto")} />
+        <BottomNavBar navigation={navigation} />
         </View>
     );
 };
