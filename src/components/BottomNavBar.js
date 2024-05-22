@@ -8,8 +8,8 @@ const BottomNavBar = ({ navigation }) => {
       <TouchableOpacity onPress={() => navigation.navigate('Search')}>
         <FontAwesome name="search" size={24} color="white" />  
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Produtos')}>
-        <FontAwesome name="list" size={24} color="white" /> 
+      <TouchableOpacity onPress={() => navigation.navigate('Produto')}>
+        <FontAwesome name="shopping-cart" size={24} color="white" /> 
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Home')}>
         <FontAwesome name="home" size={24} color="white" />
