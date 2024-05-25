@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, FlatList, Button } from "react-native";
-import axios from "axios";
-import BottomNavBar from "../components/BottomNavBar";
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, FlatList, Button } from 'react-native';
+import api from '../api'; // Importe o axios configurado
+import BottomNavBar from '../components/BottomNavBar';
 
 const Produto = ({ navigation }) => {
   const [produtos, setProdutos] = useState([]);
@@ -10,44 +10,51 @@ const Produto = ({ navigation }) => {
   useEffect(() => {
     const fetchProdutos = async () => {
       try {
-        const response = await axios.get("https://sisbdpapi-production.up.railway.app/");
-        console.log("Dados da API:", response.data); // Verificar a estrutura dos dados retornados
+        const response = await api.get('/produtos');
         setProdutos(response.data);
         setLoading(false);
       } catch (error) {
-        console.error("Erro ao buscar produtos: ", error);
-        setLoading(false);
+        console.error(error);
       }
     };
-
     fetchProdutos();
   }, []);
 
+  const renderProduto = ({ item }) => (
+    <View style={styles.produtoItem}>
+      <Text style={styles.produtoNome}>{item.nome}</Text>
+      <Text style={styles.produtoPreco}>{item.preco}</Text>
+      <Text style={styles.produtoEstoque}>Estoque: {item.estoque}</Text>
+      <Button title="Ações" onPress={() => navigation.navigate('Ações')} />
+    </View>
+  );
+
   if (loading) {
     return (
-      <View style={styles.container}>
+      <View style={styles.loadingContainer}>
         <Text>Carregando...</Text>
       </View>
     );
   }
 
-  const renderProduto = ({ item }) => (
-    <View style={styles.produtoItem}>
-      <Text style={styles.produtoName}>{item.name}</Text>
-      <Text style={styles.produtoDescription}>{item.description}</Text>
-      <Text style={styles.produtoPrice}>{item.price}</Text>
-    </View>
-  );
-
   return (
     <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.title}>Produtos</Text>
+      </View>
       <FlatList
         data={produtos}
         renderItem={renderProduto}
-        keyExtractor={(item) => item.id ? item.id.toString() : item.name} // Ajustar a chave conforme necessário
+        keyExtractor={(item) => item.id.toString()}
       />
-      <Button title="Exibir Mais..." onPress={() => navigation.navigate("Exibir Mais")} />
-      <Button title="Adicionar Produto" onPress={() => navigation.navigate("Adicionar Produto")} />
+      <Button
+        title="Exibir Mais..."
+        onPress={() => navigation.navigate('Exibir Mais')}
+      />
+      <Button
+        title="Adicionar Produto"
+        onPress={() => navigation.navigate('Adicionar Produto')}
+      />
       <BottomNavBar navigation={navigation} />
     </View>
   );
@@ -57,25 +64,38 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#fff",
+    backgroundColor: '#000',
+  },
+  header: {
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#fff',
   },
   produtoItem: {
-    marginBottom: 20,
-    padding: 20,
-    backgroundColor: "#f9f9f9",
-    borderRadius: 5,
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
   },
-  produtoName: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  produtoDescription: {
-    fontSize: 14,
-    color: "#333",
-  },
-  produtoPrice: {
+  produtoNome: {
     fontSize: 16,
-    color: "#007BFF",
+    fontWeight: 'bold',
+    color: '#fff',
+  },
+  produtoPreco: {
+    fontSize: 16,
+    color: '#fff',
+  },
+  produtoEstoque: {
+    fontSize: 16,
+    color: '#fff',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
