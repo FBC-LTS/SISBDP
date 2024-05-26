@@ -6,7 +6,7 @@ import Registro from './src/view/registro';
 import EsqueciSenha from './src/view/esquecisenha';
 import Home from './src/view/home';
 import Produto from './src/view/produto';
-import AdicionarProduto from './src/view/adicionarproduto';
+import AdicionarProduto from './src/components/adicionarproduto';
 import Clientes from './src/view/cliente';
 
 
