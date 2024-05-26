@@ -43,7 +43,7 @@ const Clientes = ({ navigation }) => {
         </ScrollView>
       )}
       <Button title="Adicionar Cliente" onPress={() => navigation.navigate('AdicionarEditarCliente')} />
-      <BottomNavBar />
+      <BottomNavBar navigation={navigation} />
     </View>
   );
 };
