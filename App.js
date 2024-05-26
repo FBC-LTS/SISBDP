@@ -6,6 +6,7 @@ import Registro from './src/view/registro';
 import EsqueciSenha from './src/view/esquecisenha';
 import Home from './src/view/home';
 import Produto from './src/view/produto';
+import AdicionarProduto from './src/view/adicionarproduto';
 
 
 
@@ -20,6 +21,7 @@ const App = () => {
         <Stack.Screen name="EsqueciSenha" component={EsqueciSenha} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Produto" component={Produto} />
+        <Stack.Screen name="AdicionarProduto" component={AdicionarProduto} />
       </Stack.Navigator>
     </NavigationContainer>
     
