@@ -14,7 +14,7 @@ const BottomNavBar = ({ navigation }) => {
       <TouchableOpacity onPress={() => navigation.navigate('Home')}>
         <FontAwesome name="home" size={24} color="white" />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Clientes')}>
         <FontAwesome name="user" size={24} color="white" />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('More')}>
