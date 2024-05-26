@@ -7,7 +7,7 @@ import EsqueciSenha from './src/view/esquecisenha';
 import Home from './src/view/home';
 import Produto from './src/view/produto';
 import AdicionarProduto from './src/view/adicionarproduto';
-
+import Clientes from './src/view/cliente';
 
 
 const Stack = createStackNavigator();
@@ -22,6 +22,7 @@ const App = () => {
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Produto" component={Produto} />
         <Stack.Screen name="AdicionarProduto" component={AdicionarProduto} />
+        <Stack.Screen name="Clientes" component={Clientes} />
       </Stack.Navigator>
     </NavigationContainer>
     
