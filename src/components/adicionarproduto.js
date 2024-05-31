@@ -1,51 +1,66 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Button, Alert } from 'react-native';
-import api from './api';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import api from './api'; // Certifique-se de que o caminho para o arquivo api está correto
 
 const AdicionarProduto = ({ navigation }) => {
+  const [tipo, setTipo] = useState('');
   const [nome, setNome] = useState('');
   const [preco, setPreco] = useState('');
+  const [quantidade, setQuantidade] = useState('');
 
   const adicionarProduto = async () => {
-    if (!nome || !preco) {
+    if (!tipo || !nome || !preco || !quantidade) {
       Alert.alert('Erro', 'Preencha todos os campos.');
       return;
     }
 
     try {
       await api.post('/produtos', {
+        tipo,
         nome,
         preco,
+        quantidade,
       });
       Alert.alert('Sucesso', 'Produto adicionado com sucesso!');
       navigation.goBack();
     } catch (error) {
       console.error(error);
-      if (error.response.status === 422) {
-        Alert.alert('Erro', `Erro ao adicionar produto: ${error.response.data.detail[0].msg}`);
-      } else {
-        Alert.alert('Erro', 'Erro ao adicionar produto. Tente novamente mais tarde.');
-      }
+      Alert.alert('Erro', 'Erro ao adicionar produto. Tente novamente mais tarde.');
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Adicionar Produto</Text>
+      <Text style={styles.header}>Cadastrar um novo produto</Text>
       <TextInput
         style={styles.input}
-        placeholder="Nome do produto"
+        placeholder="Tipo"
+        value={tipo}
+        onChangeText={setTipo}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Nome"
         value={nome}
         onChangeText={setNome}
       />
       <TextInput
         style={styles.input}
-        placeholder="Preço do produto"
+        placeholder="Preço"
         value={preco}
         onChangeText={setPreco}
         keyboardType="numeric"
       />
-      <Button title="Adicionar" onPress={adicionarProduto} />
+      <TextInput
+        style={styles.input}
+        placeholder="Quantidade"
+        value={quantidade}
+        onChangeText={setQuantidade}
+        keyboardType="numeric"
+      />
+      <TouchableOpacity style={styles.button} onPress={adicionarProduto}>
+        <Text style={styles.buttonText}>Adicionar Produto</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -54,12 +69,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#0a0a0a',
   },
   header: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: 'bold',
+    color: '#fff',
     marginBottom: 20,
+    textAlign: 'center',
   },
   input: {
     borderWidth: 1,
@@ -67,6 +84,18 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 20,
     borderRadius: 5,
+    backgroundColor: '#fff',
+    color: '#000',
+  },
+  button: {
+    backgroundColor: '#0057D9',
+    padding: 15,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#fff',
+    fontWeight: 'bold',
   },
 });
 
