@@ -1,138 +1,64 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import api from '../components/api';
 
-
-const Login = () => {
+const Login = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
 
-  const navigation = useNavigation();
+  const handleLogin = async () => {
+    try {
+      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoic2FtdWVsIiwiZXhwIjoxNzE5NDA2NDc5fQ.00bdtvCiA6Gx69sPOAU6w5rPCfkgI6cQW4fkg5qVmoA';
+      await AsyncStorage.setItem('authToken', token);
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-
-  const handleLogin = () => {
-  // Expressão regular para validar o formato do e-mail
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  // Expressão regular para validar a senha (pelo menos 8 caracteres, incluindo letras maiúsculas, minúsculas e números)
-  const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-
-  // Verifica se o e-mail e a senha atendem aos critérios
-  if (!emailRegex.test(username)) {
-    console.log('Por favor, insira um e-mail válido.');
-    return;
-  } else{
-    setEmailError('');
-  }
-
-  if (!passwordRegex.test(password)) {
-    console.log('A senha deve conter pelo menos 8 caracteres, incluindo pelo menos uma letra minúscula, uma letra maiúscula e um número.');
-    return;
-  } else{
-    setPasswordError('');
-  }
-
-  const loginSucess = true;
-
-  if (loginSucess) {
-    console.log('Login realizado com sucesso!');
-    // Redireciona para a tela Home
-    navigation.navigate('Home');
-  } else {
-    console.log('Falha no login. Verifique as credenciais e tente novamente.');
-  }
-};
-
-
-  const handleCreateAccount = () => {
-    // Lógica para criar uma nova conta
-    navigation.navigate('Registro');
-  };
-
-  const handleForgotPassword = () => {
-    // Lógica para redefinir a senha
-    navigation.navigate('EsqueciSenha');
-    console.log('Redirecionando para a página de redefinição de senha...');
+      Alert.alert('Sucesso', 'Login realizado com sucesso!');
+      navigation.navigate('Home');
+    } catch (error) {
+      console.error('Erro ao realizar login:', error);
+      Alert.alert('Erro', 'Erro ao realizar login. Verifique suas credenciais e tente novamente.');
+    }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>Usuário</Text>
+      <Text style={styles.header}>Login</Text>
       <TextInput
         style={styles.input}
-        onChangeText={setUsername}
+        placeholder="Usuário"
         value={username}
-        placeholder="Insira o seu e-mail"
+        onChangeText={setUsername}
       />
-      {emailError ? <Text style={{ color: 'red' }}>{emailError}</Text> : null}
-      <Text style={styles.label}>Senha</Text>
       <TextInput
         style={styles.input}
-        onChangeText={setPassword}
+        placeholder="Senha"
         value={password}
-        secureTextEntry={true}
-        placeholder="Insira a sua senha"
+        onChangeText={setPassword}
+        secureTextEntry
       />
-      {passwordError ? <Text style={{ color: 'red' }}>{passwordError}</Text> : null}
-      <View style={styles.rememberMeContainer}>
-        <TouchableOpacity onPress={() => setRememberMe(!rememberMe)}>
-          <View style={[styles.checkbox, rememberMe && styles.checked]} />
-        </TouchableOpacity>
-        <Text style={styles.rememberMeLabel}>Lembrar de mim</Text>
-      </View>
-      <Button title="Login" onPress={handleLogin} />
-      <TouchableOpacity onPress={handleCreateAccount}>
-        <Text style={styles.link}>Não possui uma conta? Criar conta</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={handleForgotPassword}>
-        <Text style={styles.link}>Esqueci a senha</Text>
-      </TouchableOpacity>
+      <Button title="Entrar" onPress={handleLogin} />
     </View>
   );
-
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    padding: 20,
+    backgroundColor: '#fff',
   },
-  label: {
-    marginBottom: 5,
+  header: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 20,
   },
   input: {
-    width: '80%',
     height: 40,
-    borderWidth: 1,
     borderColor: '#ccc',
-    marginBottom: 20,
-    paddingLeft: 10,
-  },
-  rememberMeContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  checkbox: {
-    width: 20,
-    height: 20,
     borderWidth: 1,
-    borderColor: '#ccc',
-    marginRight: 10,
-  },
-  checked: {
-    backgroundColor: 'blue', // Altere para a cor desejada
-  },
-  rememberMeLabel: {
-    fontSize: 16,
-  },
-  link: {
-    marginTop: 10,
-    color: 'blue', // Altere para a cor desejada
-    textDecorationLine: 'underline',
+    marginBottom: 20,
+    paddingHorizontal: 10,
   },
 });
 
