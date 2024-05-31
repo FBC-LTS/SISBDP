@@ -8,6 +8,7 @@ import Home from './src/view/home';
 import Produto from './src/view/produto';
 import AdicionarProduto from './src/components/adicionarproduto';
 import Clientes from './src/view/cliente';
+import BottomNavBar from './src/components/BottomNavBar';
 
 
 const Stack = createStackNavigator();
@@ -24,6 +25,7 @@ const App = () => {
         <Stack.Screen name="AdicionarProduto" component={AdicionarProduto} />
         <Stack.Screen name="Clientes" component={Clientes} />
       </Stack.Navigator>
+      <BottomNavBar />
     </NavigationContainer>
     
     

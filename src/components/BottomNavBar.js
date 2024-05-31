@@ -1,8 +1,11 @@
 import React from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons'; // Importa os ícones do pacote "expo-vector-icons"
+import { useNavigation } from '@react-navigation/native'; // Importa o hook useNavigation
 
-const BottomNavBar = ({ navigation }) => {
+const BottomNavBar = () => {
+  const navigation = useNavigation(); // Usa o hook useNavigation para acessar o objeto navigation
+
   return (
     <View style={styles.navBar}>
       <TouchableOpacity onPress={() => navigation.navigate('Search')}>
