@@ -10,26 +10,20 @@ const Login = ({ navigation }) => {
 
   const handleLogin = async () => {
     try {
-      const response = await api.post('/auth/login', { email, password });
-      const { token } = response.data;
-
+      const token = await api.getToken(email, password);
       if (rememberMe) {
-        await AsyncStorage.setItem('authToken', token);
+        await AsyncStorage.setItem('userToken', token);
       }
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
-      Alert.alert('Sucesso', 'Login realizado com sucesso!');
-      navigation.navigate('Home');
+      Alert.alert('Login successful', 'You have been logged in successfully');
+      navigation.navigate('Main'); // Navegar para a tela Main
     } catch (error) {
-      console.error('Erro ao realizar login:', error);
-      Alert.alert('Erro', 'Erro ao realizar login. Verifique suas credenciais e tente novamente.');
+      Alert.alert('Login failed', 'Please check your credentials and try again');
     }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Bem-Vindo(a)!</Text>
-      {/* Substitua "logo.png" pelo caminho correto do seu logo */}
       <View style={styles.logoPlaceholder}>
         <Text style={styles.logoText}>Logo</Text>
       </View>
@@ -60,7 +54,6 @@ const Login = ({ navigation }) => {
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Registro')}>
         <Text style={styles.signUpText}>Não possui uma conta? Registre-se!</Text>
-
       </TouchableOpacity>
     </View>
   );
