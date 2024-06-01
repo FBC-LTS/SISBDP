@@ -97,8 +97,6 @@ const Home = ({ navigation }) => {
         keyExtractor={(item) => item.id}
       />
 
-      <BottomNavBar navigation={navigation}/>
-
     </View>
   );
 };
