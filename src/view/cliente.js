@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Button, Alert, TouchableOpacity } from 'react-native';
 import api from '../components/api';
-import BottomNavBar from '../components/BottomNavBar';
+
 
 const Clientes = ({ navigation }) => {
   const [clientes, setClientes] = useState([]);
