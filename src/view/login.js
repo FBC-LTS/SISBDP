@@ -6,18 +6,21 @@ import api from '../components/api'; // Verifique o caminho para o arquivo api.j
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
 
   const handleLogin = async () => {
     try {
       const token = await api.getToken(email, password);
-      if (rememberMe) {
+      if (token) {
         await AsyncStorage.setItem('userToken', token);
+        navigation.navigate('Clientes');
+      } else {
+        
+        Alert.alert('Erro', 'Token inválido.');
+        console.error('Token inválido' + token);
       }
-      Alert.alert('Login successful', 'You have been logged in successfully');
-      navigation.navigate('Main'); // Navegar para a tela Main
     } catch (error) {
-      Alert.alert('Login failed', 'Please check your credentials and try again');
+      console.error(error);
+      Alert.alert('Erro', 'Erro ao fazer login. Tente novamente mais tarde.');
     }
   };
 
@@ -41,11 +44,6 @@ const Login = ({ navigation }) => {
         onChangeText={setPassword}
         secureTextEntry
       />
-      <View style={styles.rememberMeContainer}>
-        <TouchableOpacity onPress={() => setRememberMe(!rememberMe)}>
-          <Text style={styles.rememberMeText}>{rememberMe ? '✅ Lembrar-me' : 'Lembrar-me'}</Text>
-        </TouchableOpacity>
-      </View>
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Entrar</Text>
       </TouchableOpacity>
@@ -91,14 +89,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     paddingHorizontal: 10,
   },
-  rememberMeContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  rememberMeText: {
-    color: '#fff',
-  },
+ 
   button: {
     backgroundColor: '#0057D9',
     padding: 15,
