@@ -7,8 +7,10 @@ const api = axios.create({
 api.getToken = async (email, senha) => {
   try {
     const response = await api.get('/token', {
+      params:{
       'email':email,
       'senha':senha,
+    }
     });
     return response.data['token']; //Assumindo que a API retorna um objeto com a chave 'token'
   } catch (error) {
