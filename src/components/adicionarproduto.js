@@ -1,22 +1,29 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import api from './api'; // Certifique-se de que o caminho para o arquivo api está correto
+import { Dropdown } from 'react-native-element-dropdown';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 const AdicionarProduto = ({ navigation }) => {
-  const [tipo, setTipo] = useState('');
+  const data = [
+    { label: 'Produto', value: 'produto' },
+    { label: 'Serviço', value: 'servico' },
+  ];
+
   const [nome, setNome] = useState('');
   const [preco, setPreco] = useState('');
   const [quantidade, setQuantidade] = useState('');
+  const [selectedTipo, setSelectedTipo] = useState(null);
 
   const adicionarProduto = async () => {
-    if (!tipo || !nome || !preco || !quantidade) {
+    if (!selectedTipo || !nome || !preco || !quantidade) {
       Alert.alert('Erro', 'Preencha todos os campos.');
       return;
     }
 
     try {
       await api.post('/produtos', {
-        tipo,
+        tipo: selectedTipo,
         nome,
         preco,
         quantidade,
@@ -29,14 +36,39 @@ const AdicionarProduto = ({ navigation }) => {
     }
   };
 
+  const renderItem = (item) => {
+    return (
+      <View style={styles.item}>
+        <Text style={styles.itemText}>{item.label}</Text>
+        {item.value === selectedTipo && <AntDesign name="check" size={20} color="#000" />}
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Cadastrar um novo produto</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Tipo"
-        value={tipo}
-        onChangeText={setTipo}
+      <Dropdown
+        style={styles.dropdown}
+        placeholderStyle={styles.placeholderStyle}
+        selectedTextStyle={styles.selectedTextStyle}
+        inputSearchStyle={styles.inputSearchStyle}
+        iconStyle={styles.iconStyle}
+        data={data}
+        search
+        maxHeight={300}
+        labelField="label"
+        valueField="value"
+        placeholder="Selecione um item"
+        searchPlaceholder="Pesquisar..."
+        value={selectedTipo}
+        onChange={(item) => {
+          setSelectedTipo(item.value);
+        }}
+        renderLeftIcon={() => (
+          <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
+        )}
+        renderItem={renderItem}
       />
       <TextInput
         style={styles.input}
@@ -96,6 +128,34 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontWeight: 'bold',
+  },
+  dropdown: {
+    width: '100%',
+    marginBottom: 20,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 5,
+    backgroundColor: '#fff',
+  },
+  placeholderStyle: {
+    color: '#aaa',
+  },
+  selectedTextStyle: {
+    color: '#000',
+  },
+  inputSearchStyle: {
+    color: '#000',
+  },
+  iconStyle: {
+    marginRight: 10,
+  },
+  item: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
+  },
+  itemText: {
+    color: '#000',
   },
 });
 
