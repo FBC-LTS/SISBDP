@@ -1,7 +1,16 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://sisbdpapi-production.up.railway.app', // Substitua pelo seu endereço da API
-});
+  getClientes: async () => {
+    const token = AsyncStorage.getItem('userToken');
+    const response = await axios.get(`https://sisbdpapi-production.up.railway.app/clientes.json?token=${token}`).then((response) => {
+    console.log(response.data['token']);
+    return response.data['token'];
+  }).catch((error) => {
+    console.error(error);
+    throw error;
+  });
+}});
 
 export default api;
