@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import api from '../components/api';
 
+
 const AdicionarEditarCliente = ({ route, navigation }) => {
   const [cliente, setCliente] = useState({
     nome: '',
