@@ -19,7 +19,9 @@
     "install": "^0.13.0",
     "react": "18.2.0",
     "react-native": "0.73.6",
+    "react-native-element-dropdown": "^2.12.0",
     "react-native-gesture-handler": "~2.14.0",
+    "react-native-picker-select": "^9.1.3",
     "react-native-vector-icons": "^10.1.0"
   },
   "devDependencies": {
