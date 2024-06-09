@@ -134,12 +134,14 @@ const Registro = () => {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#0a0a0a',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
   label: {
     marginBottom: 5,
+    color: '#fff',
   },
   input: {
     width: '80%',
@@ -148,6 +150,7 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     marginBottom: 20,
     paddingLeft: 10,
+    backgroundColor: '#fff',
   },
 });
 
